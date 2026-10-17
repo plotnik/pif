@@ -1,0 +1,17 @@
+[Unit]
+Description=pif — Pi files vault API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/pif
+EnvironmentFile=-/home/pi/.pif/environment
+ExecStart=/home/pi/pif/.venv/bin/uvicorn pif.app:app --host 0.0.0.0 --port 8000 --workers 1
+Restart=on-failure
+RestartSec=5
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
