@@ -94,7 +94,7 @@ curl -X POST "$base/apply-prompt" -H 'Content-Type: application/json' -d '{"prom
 curl -X DELETE "$base/prompts/summary"
 ```
 
-Gemini receives the prompt body as its system instruction and the entire markdown page as input. Frontmatter tags are not part of the prompt instruction. Attachments and linked notes are not expanded; template variables are not substituted. Response: `{model, prompt, page, result}`. Nothing is saved; use the markdown PUT endpoint to save a result explicitly. Requests time out after 120 seconds. Calls use your Gemini account and may incur charges.
+Gemini receives the prompt body as its system instruction and the entire markdown page as input. Frontmatter tags are not part of the prompt instruction. Attachments and linked notes are not expanded; template variables are not substituted. Response: `{model, prompt, page, result}`. Nothing is saved; use the markdown PUT endpoint to save a result explicitly. Requests time out after 30 minutes. Calls use your Gemini account and may incur charges.
 
 Errors use `{"error":{"code":"...","message":"..."}}`: 403 forbidden paths, 404 missing files/parents, 409 duplicate prompt, 422 invalid inputs/frontmatter, 500 storage failure, 502 upstream/empty generation, 503 missing API key, 504 Gemini timeout.
 

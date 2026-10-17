@@ -452,7 +452,7 @@ location, and resolves the page from the captured current directory. File reads
 run in worker threads so they do not block the event loop. Prompt and page
 reads are independent, not a joint filesystem snapshot.
 
-Only the generation call is inside the 120-second timeout. Timeout, empty text,
+Only the generation call is inside the 30-minute timeout. Timeout, empty text,
 and upstream failures have distinct public outcomes. The response includes the
 captured model and resolved page path for traceability. No result is written:
 a client that wants to save it must explicitly call the markdown PUT route::
@@ -464,7 +464,7 @@ a client that wants to save it must explicitly call the markdown PUT route::
           prompt = await asyncio.to_thread(read_prompt, body.prompt)
           page = await asyncio.to_thread(app.state.vault.text, path)
           try:
-              async with asyncio.timeout(120):
+              async with asyncio.timeout(30 * 60):
                   result = await app.state.generator(settings.gemini_model, prompt["content"], page)
               if not isinstance(result, str) or not result.strip():
                   raise Problem(502, "empty_generation", "Gemini returned no text or blocked the request.")
